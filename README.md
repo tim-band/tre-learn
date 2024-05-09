@@ -27,8 +27,9 @@ interpolations in the `kubernetes.tf` configuration.
 
 You can kill the cluster with `./kill.sh` and `ssh` into the first pod
 with `ssh-pod.sh`. The docker containers running after creating the
-cluster are two Ranchers and one load balancer; the pods themselves
-run under `containerd`.
+cluster are one Rancher and one load balancer; the pods themselves
+run under `containerd`. You can create multiple Ranchers if you like
+but I don't know what effect that has or why you'd want it.
 
 Terraform the cluster with `terraform apply`.
 

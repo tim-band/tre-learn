@@ -3,11 +3,12 @@ name="tre-learn"
 ingress_port=33302
 api_port=33301
 vars_file="terraform.tfvars"
+rancher_count=1
 if k3d cluster list ${name}
 then
     k3d cluster delete ${name}
 fi
-k3d cluster create ${name} --servers 2 --api-port 0.0.0.0:${api_port} --port "${ingress_port}:30201@loadbalancer"
+k3d cluster create ${name} --servers ${rancher_count} --api-port 0.0.0.0:${api_port} --port "${ingress_port}:30201@loadbalancer"
 api_server=$(k3d kubeconfig get ${name} | yq '.clusters[0].cluster.server')
 ca_cert=$(k3d kubeconfig get ${name} | yq '.clusters[0].cluster."certificate-authority-data"')
 client_cert=$(k3d kubeconfig get ${name} | yq '.users[0].user."client-certificate-data"')

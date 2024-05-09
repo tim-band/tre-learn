@@ -1,1 +1,1 @@
-k3d cluster delete ${name}
+k3d cluster delete tre-learn
