@@ -33,5 +33,11 @@ but I don't know what effect that has or why you'd want it.
 
 Terraform the cluster with `terraform apply`.
 
-Once it is finished you will be able to see the nginx servers exposed
+Once it is finished you will be able to see the servers exposed
 through the [ingress URL](http://localhost:33302).
+
+## Dockerfile
+
+The Dockerfile is used to build a docker image which is pushed to
+Docker Hub as `timband/tre-learn`. This image is used in the
+Terraform deployment.

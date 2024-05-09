@@ -1,1 +1,1 @@
-k3d cluster delete tre-learn
+k3d cluster delete $(cat old_name)

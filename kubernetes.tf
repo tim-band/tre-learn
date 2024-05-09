@@ -4,6 +4,14 @@ terraform {
     }
 }
 
+locals {
+    app_name = "ScalableTreLearn"
+    pod_name = "scalable-tre-learn"
+    app_image = "timband/tre-learn:latest"
+    app_port = 8080
+    service_name = "tre-learn"
+}
+
 variable "host" { type = string }
 variable "client_certificate" { type = string }
 variable "client_key" { type = string }
@@ -16,31 +24,31 @@ provider "kubernetes" {
     cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
 }
 
-resource "kubernetes_deployment" "nginx" {
+resource "kubernetes_deployment" "app" {
     metadata {
-        name = "scalable-nginx-example"
+        name = local.pod_name
         labels = {
-            App = "ScalableNginxExample"
+            App = local.app_name
         }
     }
     spec {
         replicas = 2
         selector {
             match_labels = {
-                App = "ScalableNginxExample"
+                App = local.app_name
             }
         }
         template {
             metadata {
                 labels = {
-                    App = "ScalableNginxExample"
+                    App = local.app_name
                 }
             }
             spec {
                 container {
-                    image = "nginx:1.7.8"
+                    image = local.app_image
                     name = "example"
-                    port { container_port = 80 }
+                    port { container_port = local.app_port }
                     resources {
                         limits = {
                             cpu = "0.5"
@@ -57,16 +65,16 @@ resource "kubernetes_deployment" "nginx" {
     }
 }
 
-resource "kubernetes_service" "nginx" {
-    metadata { name = "nginx-example" }
+resource "kubernetes_service" "app" {
+    metadata { name = local.service_name }
     spec {
         selector = {
-            App = kubernetes_deployment.nginx.spec.0.template.0.metadata[0].labels.App
+            App = kubernetes_deployment.app.spec.0.template.0.metadata[0].labels.App
         }
         port {
             node_port = 30201
             port = 80
-            target_port = 80
+            target_port = local.app_port
         }
         type = "NodePort"
     }
