@@ -41,3 +41,19 @@ through the [ingress URL](http://localhost:33302).
 The Dockerfile is used to build a docker image which is pushed to
 Docker Hub as `timband/tre-learn`. This image is used in the
 Terraform deployment.
+
+## Debugging
+
+In `kubernetes.tf` set `local.debug` to `true`, then `terraform apply`.
+You need to wait for the build to complete in the container.
+Once the server is up you can connect to the pod:
+
+```sh
+./debug-tunnel.sh
+```
+
+and in another terminal:
+
+```sh
+dlv connect --init source/tre/learn/delve-init.txt localhost:32100
+```

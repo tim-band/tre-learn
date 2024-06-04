@@ -19,3 +19,4 @@ echo "host=${api_server}" > ${vars_file}
 echo "cluster_ca_certificate=${ca_cert}" >> ${vars_file}
 echo "client_certificate=${client_cert}" >> ${vars_file}
 echo "client_key=${client_key}" >> ${vars_file}
+echo "Remember to call terraform apply!"
