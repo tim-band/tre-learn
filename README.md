@@ -57,3 +57,24 @@ and in another terminal:
 ```sh
 dlv connect --init source/tre/learn/delve-init.txt localhost:32100
 ```
+
+A suitable VSCode launch configuration looks like:
+
+```json
+{
+    "name": "Connect to 32100",
+    "type": "go",
+    "request": "attach",
+    "mode": "remote",
+    "cwd": "${workspaceFolder}",
+    "port": 32100,
+    "host": "127.0.0.1",
+    "showLog": true,
+    "trace": "log",
+    "logOutput": "rpc",
+    "apiVersion": 2
+},
+```
+
+You might have to re-run `debug-tunnel.sh` and relaunch the debugger a
+few times to get this to work.
